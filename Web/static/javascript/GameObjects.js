@@ -1903,3 +1903,45 @@ link_rooms(KernelFiles, MoreKernelFiles);
 link_rooms(Home, MIT);
 link_rooms(MIT, StataCenter);
 link_rooms(MIT, AthenaCluster);
+
+function get_room_from_name(room_name) {
+    switch(room_name) {
+        case "Home": return Home;
+        case "WesternForest": return WesternForest;
+        case "SpellCastingAcademy": return SpellCastingAcademy;
+        case "PracticeRoom": return PracticeRoom;
+        case "Box": return Box;
+        case "NorthernMeadow": return NorthernMeadow;
+        case "EasternMountains": return EasternMountains;
+        case "Lessons": return Lessons;
+        case "Cave": return Cave;
+        case "DarkCorridor": return DarkCorridor;
+        case "Staircase": return Staircase;
+        case "DankRoom": return DankRoom;
+        case "SmallHole": return SmallHole;
+        case "Tunnel": return Tunnel;
+        case "StoneChamber": return StoneChamber;
+        case "Portal": return Portal;
+        case "TownSquare": return TownSquare;
+        case "Marketplace": return Marketplace;
+        case "Library": return Library;
+        case "BackRoom": return BackRoom;
+        case "RockyPath": return RockyPath;
+        case "ArtisanShop": return ArtisanShop;
+        case "Farm": return Farm;
+        case "Clearing": return Clearing;
+        case "BrokenBridge": return BrokenBridge;
+        case "OminousLookingPath": return OminousLookingPath;
+        case "Slide": return Slide;
+        case "KernelFiles": return KernelFiles;
+        case "MoreKernelFiles": return MoreKernelFiles;
+        case "Paradise": return Paradise;
+        case "CaveOfDisgruntledTrolls": return CaveOfDisgruntledTrolls;
+        case "Cage": return Cage;
+        case "AthenaCluster": return AthenaCluster;
+        case "MIT": return MIT;
+        case "StataCenter": return StataCenter;
+        case "MagicLocker": return MagicLocker;
+        default: return null;
+    }
+}

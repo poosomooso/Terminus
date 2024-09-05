@@ -74,7 +74,11 @@ $(document).ready(function() {
             if (args.length > 0 && args[0].indexOf("/") > 0){
                 var rooms_in_order = args[0].split("/");
                 var cur_room_to_test = current_room;
-                for (var i = 0; i < rooms_in_order.length; i++){
+                var num_iters = rooms_in_order.length;
+                if (command === "mv") {
+                    num_iters--;
+                }
+                for (var i = 0; i < num_iters; i++){
                     prev_room_to_test = cur_room_to_test;
                     var room_to_cd = rooms_in_order[i];
                     if (i > 0 && rooms_in_order[i-1] === "~"){
@@ -88,8 +92,11 @@ $(document).ready(function() {
                         term.echo("That is not reachable from here.");
                         exec = false;
                     }
+                }                
+                if (command !== "mv") {
+                    // if it is a mv, the argument should just be the whole original string
+                    args[0] = cur_room_to_test.room_name;
                 }
-                args[0] = cur_room_to_test.room_name;
             }
             if (exec){
                 var text_to_display = prev_room_to_test[command](args);

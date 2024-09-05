@@ -276,17 +276,33 @@ Room.prototype.mv = function(args){
 	if (args.length != 2){
 		return "You need to move thing A to place B. Use mov [thingA] [placeB].";
 	} else {
-		var item_name_to_move = this.itemStringArray().indexOf(args[0]);
-		if ((item_name_to_move >= 0) && (this.childrenStringArray().indexOf(args[1]) >= 0)){
-			itemtoadd = this.items[this.itemStringArray().indexOf(args[0])];
-			this.children[this.childrenStringArray().indexOf(args[1])].addItem(itemtoadd);
+	    var path_to_item = args[0].split("/");
+	    var name_of_item = path_to_item[path_to_item.length - 1];
+		var removing_room = this;
+		if (path_to_item.length > 1) {
+			// should have checked if cd-able from before this function call
+			removing_room = get_room_from_name(path_to_item[path_to_item.length-2]);
+		}
+		var item_name_to_move = removing_room.itemStringArray().indexOf(name_of_item);
+
+		if ((item_name_to_move >= 0) &&
+		        ((this.childrenStringArray().indexOf(args[1]) >= 0)||args[1]==="." || args[1] ===".." )){
+			var itemtoadd = removing_room.items[removing_room.itemStringArray().indexOf(name_of_item)];
+			
+			if (args[1] === ".") {
+			    current_room.addItem(itemtoadd);
+			} else if (args[1] === "..") {
+			    this.parents[0].addItem(itemtoadd);
+			} else {
+			    this.children[this.childrenStringArray().indexOf(args[1])].addItem(itemtoadd);
+			}
 			if ((args[0] === "UglyTroll") && (this.room_name === "CaveOfDisgruntledTrolls")){
 				this.ev.fire("openSlide");
 			}
 			if ((args[0] === "Boulder") && (this.room_name === "DankRoom")){
 				this.ev.fire("mvBoulder");
 			}
-			this.removeItem(args[0]);
+			removing_room.removeItem(name_of_item);
 			return "Moved " + args[0] + " to " + args[1] + ".";
 		} else {
 			return "Must be a valid item and location to move it.";
